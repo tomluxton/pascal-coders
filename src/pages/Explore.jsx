@@ -1,4 +1,4 @@
-import { Nav, Container, Ro, Navbar } from "react-bootstrap"
+import { Nav, Container, Navbar } from "react-bootstrap"
 
 function Explore() {
   return(
