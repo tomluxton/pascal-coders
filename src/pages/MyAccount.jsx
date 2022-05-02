@@ -14,7 +14,15 @@ function MyAccount() {
           </Col>
         </Row>
         <Row>
-          
+          <Col><p>Personal Details</p></Col>
+          <Col><Button varient= "primary">Change</Button>{' '}</Col>
+        </Row>
+        <Row>
+          <Col>
+            <form>
+
+            </form>
+          </Col>
         </Row>
         </Container>
     </div>
