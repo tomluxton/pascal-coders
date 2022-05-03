@@ -5,6 +5,7 @@ import visibilityIcon from "../assets/svg/visibilityIcon.svg"
 import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'
 import {setDoc, doc, serverTimestamp} from 'firebase/firestore'
 import {db} from '../firebase.config'
+import { toast } from 'react-toastify';
 
 function SignUp() {
 
@@ -46,7 +47,17 @@ function SignUp() {
       
       navigate('/')
     } catch (error) {
-      
+      if (error.code === 'auth/email-already-in-use') {
+        toast.error('User exists with this email. Please signin instead')
+      } else if (error.code === 'auth/invalid-email') {
+        toast.error('Invalid Email. Please user valid email')
+      } else if (error.code === 'auth/internal-error') {
+        toast.error('Something went wrong, please ensure all forms are filled out')
+      } else if (error.code === 'auth/weak-password') {
+        toast.error('The password is too weak')
+      } else {
+      toast.error(error.code)
+      }
     }
   }
 

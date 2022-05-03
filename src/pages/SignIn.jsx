@@ -2,6 +2,9 @@ import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {ReactComponent as ArrowRightIcon} from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg"
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+import { async } from '@firebase/util'
+import {toast} from 'react-toastify'
 
 function SignIn() {
 
@@ -21,6 +24,36 @@ function SignIn() {
     }))
   }
 
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const auth = getAuth()
+
+      const userCredential = await signInWithEmailAndPassword(auth,email, password)
+
+      if(userCredential.user) {
+        navigate('/')
+      }
+      
+    } catch (error) {
+      if (error.code === 'auth/wrong-password') {
+        toast.error('Wrong Password')
+      } else if (error.code === 'auth/user-not-found') {
+        toast.error('No User with that Email. Please Signup')
+      } else if (error.code === 'auth/internal-error') {
+        toast.error('Something went wrong, please ensure all forms are filled out')
+      } else if (error.code === 'auth/invalid-email') {
+        toast.error('Invalid Email')
+      } else {
+      toast.error(error.code)
+      }
+
+    }
+
+  }
+
+
 
   return (
     <>
@@ -29,7 +62,7 @@ function SignIn() {
           <p>Welcome Back!</p>
         </header>
 
-        <form>
+        <form onSubmit={onSubmit}>
           <input type="email" className="emailInput" placeholder='Email' id="email" value = {email} onChange = {onChange}/>
 
           <div>

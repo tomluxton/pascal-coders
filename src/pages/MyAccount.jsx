@@ -1,8 +1,15 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
-
+import {getAuth} from 'firebase/auth'
+import {useState, useEffect} from 'react'
 
 function MyAccount() {
+  const [user, setUser] = useState(null)
 
+  const auth = getAuth()
+  useEffect(()=>{
+
+    setUser(auth.currentUser)
+  }, [])
 
   return (
     <div className="myAccount">
@@ -12,6 +19,9 @@ function MyAccount() {
           <Col>
             <Button variant="primary">Log out</Button>{' '}
           </Col>
+        </Row>
+        <Row>
+          <Col>{user ? <p>Hi there {user.displayName}</p> : 'not logged in'}</Col>
         </Row>
         <Row>
           <Col><p>Personal Details</p></Col>
