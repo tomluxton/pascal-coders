@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
+import PrivateRoute from "./components/PrivateRoute";
 
 
 function App() {
@@ -20,7 +21,9 @@ function App() {
       <Routes>
         <Route path = "/" element = {<Explore />}/>
         {/*will need to add in my account later */}
-        <Route path = "/my-account" element = {<MyAccount />}/>
+        <Route path = "/my-account" element = {<PrivateRoute />}>
+          <Route path = "/my-account" element = {<MyAccount />}/>
+        </Route>
         <Route path = "/sign-in" element = {<SignIn />}/>
         <Route path = "/sign-up" element = {<SignUp />}/>
         <Route path = "/forgot-password" element = {<ForgotPassword />}/>

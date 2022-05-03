@@ -1,15 +1,30 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
-import {getAuth} from 'firebase/auth'
+import {getAuth, updateProfile} from 'firebase/auth'
 import {useState, useEffect} from 'react'
+import { useNavigate, Link } from "react-router-dom"
+import {updateDoc} from 'firebase/firestore'
+import {db} from '../firebase.config'
 
 function MyAccount() {
-  const [user, setUser] = useState(null)
-
   const auth = getAuth()
-  useEffect(()=>{
+  const [changeDetails, setChangeDetails] = useState(false)
+  const [formData, setFormData] = useState({
+    name: auth.currentUser.displayName,
+    email: auth.currentUser.email,
+  })
 
-    setUser(auth.currentUser)
-  }, [])
+  const {name, email} = formData;
+
+  const navigate = useNavigate();
+
+  const onLogout = () => {
+    auth.signOut()
+    navigate('/')
+  }
+
+  const onSubmit = () => {
+    console.log(123)
+  }
 
   return (
     <div className="myAccount">
@@ -17,15 +32,20 @@ function MyAccount() {
         <Row>
           <Col sm={4}><h1>My Account</h1></Col>
           <Col>
-            <Button variant="primary">Log out</Button>{' '}
+            <Button variant="primary" onClick={onLogout}>Log out</Button>
           </Col>
         </Row>
-        <Row>
-          <Col>{user ? <p>Hi there {user.displayName}</p> : 'not logged in'}</Col>
+        <Row> 
+          {/*
+          <Col>{name ? <p>Hi there {name}</p> : 'not logged in'}</Col>
+  */}
         </Row>
         <Row>
           <Col><p>Personal Details</p></Col>
-          <Col><Button varient= "primary">Change</Button>{' '}</Col>
+          <Col><p onClick={() => {
+            changeDetails && onSubmit()
+            setChangeDetails((prevState)=> !prevState)
+          }}>{changeDetails ? 'done': 'change'}</p></Col>
         </Row>
         <Row>
           <Col>
