@@ -1,9 +1,10 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
-import {getAuth, updateProfile} from 'firebase/auth'
+import {getAuth, updateProfile, sendEmailVerification} from 'firebase/auth'
 import {useState, useEffect} from 'react'
 import { useNavigate, Link } from "react-router-dom"
-import {updateDoc} from 'firebase/firestore'
+import {limitToLast, updateDoc} from 'firebase/firestore'
 import {db} from '../firebase.config'
+import {toast} from 'react-toastify'
 
 function MyAccount() {
   const auth = getAuth()
@@ -25,6 +26,12 @@ function MyAccount() {
   const onSubmit = () => {
     console.log(123)
   }
+  
+  const onVerifyEmail = () => {
+    sendEmailVerification(auth.currentUser)
+    toast.success("Email sent please check your email")
+    
+  }
 
   return (
     <div className="myAccount">
@@ -33,6 +40,14 @@ function MyAccount() {
           <Col sm={4}><h1>My Account</h1></Col>
           <Col>
             <Button variant="primary" onClick={onLogout}>Log out</Button>
+            
+
+          </Col>
+        </Row>
+        <Row> 
+          <p>{auth.currentUser.emailVerified ? 'Email verified' : 'Email Not Verified'}</p>
+          <Col>
+            <Button variant="primary" onClick={onVerifyEmail} className ={auth.currentUser.emailVerified ?"invisible": "visable"}>Verify Email</Button>
           </Col>
         </Row>
         <Row> 
