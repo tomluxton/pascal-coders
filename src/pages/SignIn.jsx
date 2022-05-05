@@ -6,9 +6,19 @@ import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import { async } from '@firebase/util'
 import {toast} from 'react-toastify'
 import ReCAPTCHA from "react-google-recaptcha";
+import { useCookies, setCookie } from 'react-cookie';
 
 
 function SignIn() {
+
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = () => {
+    setChecked(!checked);
+  };
+
+  const [cookies, setCookie] = useCookies(['user']);
+
   const [isVerified, setIsVerified] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -16,6 +26,10 @@ function SignIn() {
     password: ''
   })
   const {email, password} = formData
+
+  const today = new Date()
+  let tomorrow =  new Date()
+  tomorrow.setDate(today.getDate() + 1)
 
   const navigate = useNavigate()
 
@@ -33,6 +47,11 @@ function SignIn() {
       const auth = getAuth()
 
       const userCredential = await signInWithEmailAndPassword(auth,email, password)
+
+      if (checked) {
+        setCookie('Email', formData.email, { path: '/', expires: tomorrow});
+        setCookie('Password', formData.password, { path: '/', expires: tomorrow});
+      }
 
       if(userCredential.user) {
         navigate('/')
@@ -55,6 +74,11 @@ function SignIn() {
 
   }
 
+  // const handleCookies = () => {
+  //     setCookie('Email', formData.email, { path: '/' });
+  //     setCookie('Password', formData.password, { path: '/' });
+  //  };
+
 
 
   return (
@@ -76,6 +100,12 @@ function SignIn() {
               value ={password}
               onChange = {onChange}  
             />
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={handleChange}
+            />
+            <label>Remeber Me</label>
             <ReCAPTCHA
               sitekey="6LdGXMYfAAAAADlWRO7Vo4XVya7iAJPQIKk9V6uU"
               onChange={() => setIsVerified((prevState) => !prevState)}
