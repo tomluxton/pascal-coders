@@ -5,9 +5,11 @@ import visibilityIcon from "../assets/svg/visibilityIcon.svg"
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import { async } from '@firebase/util'
 import {toast} from 'react-toastify'
+import ReCAPTCHA from "react-google-recaptcha";
+
 
 function SignIn() {
-
+  const [isVerified, setIsVerified] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
@@ -74,6 +76,10 @@ function SignIn() {
               value ={password}
               onChange = {onChange}  
             />
+            <ReCAPTCHA
+              sitekey="6LdGXMYfAAAAADlWRO7Vo4XVya7iAJPQIKk9V6uU"
+              onChange={() => setIsVerified((prevState) => !prevState)}
+            />
             <img src={visibilityIcon} alt="show password" className="showPassword" onClick={() => setShowPassword((prevState) => !prevState)}/>
           </div>
 
@@ -81,7 +87,7 @@ function SignIn() {
           
           <div>
             <p>Sign In</p>
-            <button className='signInButton'>
+            <button className='signInButton' disabled={!isVerified}>
               <ArrowRightIcon fill = "#ffffff" width = '34px' height = '34px' />
             </button>
           </div>
