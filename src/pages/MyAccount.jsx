@@ -1,8 +1,8 @@
-import { Button, Col, Container, Row } from "react-bootstrap"
+import { Button, Col, Container, Row , Card} from "react-bootstrap"
 import {getAuth, updateProfile, sendEmailVerification} from 'firebase/auth'
 import {useState, useEffect} from 'react'
 import { useNavigate, Link } from "react-router-dom"
-import {limitToLast, updateDoc} from 'firebase/firestore'
+import {limitToLast, updateDoc, doc } from 'firebase/firestore'
 import {db} from '../firebase.config'
 import {toast} from 'react-toastify'
 
@@ -23,14 +23,34 @@ function MyAccount() {
     navigate('/')
   }
 
-  const onSubmit = () => {
-    console.log(123)
+  const onSubmit = async () => {
+    try {
+      if (auth.currentUser.displayName !== name)
+      await updateProfile(auth.currentUser, {displayName: name})
+
+      const userRef = doc(db, 'users', auth.currentUser.uid)
+      await updateDoc(userRef, { name })
+
+    } catch (error) {
+      toast.error(error.code)
+    }
   }
   
   const onVerifyEmail = () => {
     sendEmailVerification(auth.currentUser)
     toast.success("Email sent please check your email")
-    
+  }
+
+  const onChangeDetails = () => {
+    changeDetails && onSubmit()
+    setChangeDetails((prevState)=> !prevState)
+  }
+
+  const onChange = (e) => {
+    setFormData ((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }))
   }
 
   return (
@@ -51,22 +71,29 @@ function MyAccount() {
           </Col>
         </Row>
         <Row> 
-          {/*
-          <Col>{name ? <p>Hi there {name}</p> : 'not logged in'}</Col>
-  */}
+
+          <Col>{name ? <h3>Hi there {name}</h3> : 'not logged in'}</Col>
+
         </Row>
         <Row>
-          <Col><p>Personal Details</p></Col>
-          <Col><p onClick={() => {
-            changeDetails && onSubmit()
-            setChangeDetails((prevState)=> !prevState)
-          }}>{changeDetails ? 'done': 'change'}</p></Col>
+          <Col sm={4}><p>Personal Details</p></Col>
+          <Col><Button variant="primary" onClick={onChangeDetails}>{changeDetails ? 'Done': 'Change'}</Button></Col>
         </Row>
         <Row>
           <Col>
-            <form>
-
-            </form>
+            <Card style={{ width: '18rem' }}>
+              <form>
+                <input 
+                  type='text'
+                  id='name'
+                  className={!changeDetails ? 'profileName' : 'profileNameActive'}
+                  disabled={!changeDetails}
+                  value = {name}
+                  onChange = {onChange}
+                />
+                
+              </form>
+            </Card>
           </Col>
         </Row>
         </Container>
