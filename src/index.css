@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.coursePriamryImage {
+  border-radius: 10px;
+  width: 200px;
+}
+
 /* Color Palette
 green: #a5f98d
 pink: #fac7f3

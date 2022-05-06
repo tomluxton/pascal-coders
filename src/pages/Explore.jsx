@@ -1,6 +1,52 @@
 import { Nav, Container, Navbar } from "react-bootstrap"
+import {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
+import {collection, getDcos,query, where, orderBy, limit, startAfter, getDocs, doc} from 'firebase/firestore'
+import {db} from '../firebase.config'
+import {toast} from 'react-toastify'
+import CourseItem from "../components/CourseItem"
+
 
 function Explore() {
+
+  const [courses, setCourses] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const params = useParams()
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      //console.log("here")
+      try {
+        const courseRef = collection (db, 'courses')
+
+        const q = query( courseRef, 
+        orderBy('timestamp', 'desc'),
+        limit(10)
+        )
+
+        const querySnap = await getDocs(q)
+        
+        const courses = []
+        querySnap.forEach((doc) =>{
+          {/*console.log(doc.data()) */}
+          return courses.push({
+            id: doc.id,
+            data: doc.data()
+          })
+        })
+        setCourses(courses)
+        setLoading(false)
+      } catch (error) {
+        toast.error(error.code)
+        console.log(error)
+      }
+
+    };
+
+    fetchCourses();
+  }, [])
+
   return(
   <div>
     <Navbar bg="white" expand="lg">
@@ -23,6 +69,25 @@ function Explore() {
       </Container>
     </Navbar>
     <div>Explore</div>
+
+    {loading ? (
+      <h2>Loading...</h2>
+    ) : 
+    <div>
+    <ul>
+      { courses.map((course) => (
+        <CourseItem 
+        course ={course.data}
+        id= {course.id}
+        key= {course.id}
+        />
+      ))}
+    </ul>
+  </div>
+  }
+    
+
+
 </div>
   )
 }
