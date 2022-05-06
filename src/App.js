@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateCourse from "./pages/CreateCourse";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path = "/my-learning" element = {<MyLearning />}/>
         <Route path = "/shopping-cart" element = {<ShoppingCart />}/>
         <Route path = "/teaching-portal" element = {<TeachingPortal />}/>
+        <Route path = "/teaching-portal/create-course" element = {<CreateCourse />} />
       </Routes>
     </Router>
     <ToastContainer />
