@@ -68,7 +68,7 @@ function Explore() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    <div>Explore</div>
+    <div>Explore page</div>
 
     {loading ? (
       <h2>Loading...</h2>
