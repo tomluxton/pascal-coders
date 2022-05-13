@@ -5,6 +5,7 @@ import {collection, getDcos,query, where, orderBy, limit, startAfter, getDocs, d
 import {db} from '../firebase.config'
 import {toast} from 'react-toastify'
 import CourseItem from "../components/CourseItem"
+import {Row} from "react-bootstrap"
 
 
 function Explore() {
@@ -74,7 +75,7 @@ function Explore() {
       <h2>Loading...</h2>
     ) : 
     <div>
-    <ul>
+    <Row xs={1} md={2} className="g-4">
       { courses.map((course) => (
         <CourseItem 
         course ={course.data}
@@ -82,7 +83,7 @@ function Explore() {
         key= {course.id}
         />
       ))}
-    </ul>
+    </Row>
   </div>
   }
     

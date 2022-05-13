@@ -1,21 +1,26 @@
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import {Card, Button} from 'react-bootstrap'
 
 
 function CourseItem ({course, id}) {
+
+  const navigate = useNavigate()
+
+  const onPress = () => {
+    navigate(`/${id}`)
+  }
   return ( 
-    <li>
-      <Link to = {'/${id}'}>
-        <img 
-          src = {course.imgURLs[0]} 
-          alt = {course.name}
-          className = "coursePriamryImage"
-        />
-        <div>
-          <h4>{course.name}</h4>
-          <p>${course.price}</p>
-        </div>
-      </Link>
-    </li>
+
+    <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={course.imgURLs[0]} />
+      <Card.Body>
+        <Card.Title>{course.name}</Card.Title>
+        <Card.Text>
+          ${course.price}
+        </Card.Text>
+        <Button variant="primary" onClick = {onPress} >View Course</Button> 
+      </Card.Body>
+    </Card>
   )
 }
 
