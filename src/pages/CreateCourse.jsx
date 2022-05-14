@@ -136,12 +136,19 @@ function CreateCourse() {
     )
   }
 
+  const radioOnChange = e => {
+    setFormData ((prevState) => ({
+      ...prevState,
+      type: e.target.value,
+    }))
+  }
+
   return (
     <Container>
       <Row>
       <h1>Create a Course</h1>
       </Row>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className = "form-inline">
         <Row>
           <label>Name</label>
           <input type = "text" id = "name" value = {name} onChange = {onChange} required/>
@@ -154,6 +161,22 @@ function CreateCourse() {
           <label>Images and Videos</label>
           <input type = "file" id = "images" accept = '.jpg,.png,.jpeg' onChange = {onChange} multiple required/>
         </Row>
+        <div onChange = {radioOnChange}>
+          <label>Type of course:</label>
+          <input type="radio" id="wd" name="courseType" value="Web Development" />
+          <label for="wd">Web Development</label>
+          <input type="radio" id="md" name="courseType" value="Mobile Developmen" />
+          <label for="md">Mobile Development</label>
+          <input type="radio" id="gd" name="courseType" value="Game Development" />
+          <label for="gd">Game Development</label>
+          <input type="radio" id="gdes" name="courseType" value="Graphics Design" />
+          <label for="gdes">Graphics Design</label>
+          <input type="radio" id="da" name="courseType" value="Data Analytics" />
+          <label for="da">Data Analytics</label>
+          <input type="radio" id="dm" name="courseType" value="Digital Marketing" />
+          <label for="dm">Digital Marketing</label>
+        </div>
+          
         <Row>
         <button type = "submit">Create</button>
         </Row> 
