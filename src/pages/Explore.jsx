@@ -81,6 +81,7 @@ function Explore() {
         course ={course.data}
         id= {course.id}
         key= {course.id}
+        type = {course.type}
         />
       ))}
     </Row>
