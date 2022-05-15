@@ -7,7 +7,7 @@ function CourseItem ({course, id}) {
   const navigate = useNavigate()
 
   const onPress = () => {
-    navigate(`/${id}`)
+    navigate(`/${course.type}/${id}`)
   }
   return ( 
 
@@ -15,6 +15,9 @@ function CourseItem ({course, id}) {
       <Card.Img variant="top" src={course.imgURLs[0]} />
       <Card.Body>
         <Card.Title>{course.name}</Card.Title>
+        <Card.Text>
+          {course.type}
+        </Card.Text>
         <Card.Text>
           ${course.price}
         </Card.Text>

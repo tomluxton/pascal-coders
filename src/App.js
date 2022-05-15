@@ -12,6 +12,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateCourse from "./pages/CreateCourse";
+import Course from './pages/Course'
+import Category from './pages/Category'
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
         <Route path = "/shopping-cart" element = {<ShoppingCart />}/>
         <Route path = "/teaching-portal" element = {<TeachingPortal />}/>
         <Route path = "/teaching-portal/create-course" element = {<CreateCourse />} />
+        <Route path='/:categoryName' element={<Category />} />
+        <Route path= '/:categoryName/:listingId' element = {<Course />}/>
       </Routes>
     </Router>
     <ToastContainer />
