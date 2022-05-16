@@ -3,6 +3,9 @@ import {Link, useNavigate, useParams} from 'react-router-dom'
 import {getDoc, doc} from 'firebase/firestore'
 import {getAuth} from 'firebase/auth'
 import {db} from '../firebase.config'
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+import {Container} from 'react-bootstrap'
 
 
 
@@ -34,9 +37,19 @@ function Course() {
 
   return (
     <div>
+      <Container fluid="md" className='courseContainer'>
       <h1>{course.name}</h1>
-      <p>Price: ${course.price}</p>
-      
+      <h4>{course.type}</h4>
+      <p>Price: ${course.price}</p>      
+        <Carousel>
+          { course.imgURLs.map((imageURL) => (
+            <div>
+            <img src={imageURL} />
+          </div>
+        ))}
+          
+        </Carousel>
+      </Container>
     </div>
   )
 }
