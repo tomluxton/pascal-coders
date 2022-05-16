@@ -163,17 +163,17 @@ function CreateCourse() {
         </Row>
         <div onChange = {radioOnChange}>
           <label>Type of course:</label>
-          <input type="radio" id="wd" name="courseType" value="Web Development" />
+          <input type="radio" id="wd" name="courseType" value="web-development" />
           <label for="wd">Web Development</label>
-          <input type="radio" id="md" name="courseType" value="Mobile Developmen" />
+          <input type="radio" id="md" name="courseType" value="mobile-developmen" />
           <label for="md">Mobile Development</label>
-          <input type="radio" id="gd" name="courseType" value="Game Development" />
+          <input type="radio" id="gd" name="courseType" value="game-development" />
           <label for="gd">Game Development</label>
-          <input type="radio" id="gdes" name="courseType" value="Graphics Design" />
+          <input type="radio" id="gdes" name="courseType" value="graphics-design" />
           <label for="gdes">Graphics Design</label>
-          <input type="radio" id="da" name="courseType" value="Data Analytics" />
+          <input type="radio" id="da" name="courseType" value="data-analytics" />
           <label for="da">Data Analytics</label>
-          <input type="radio" id="dm" name="courseType" value="Digital Marketing" />
+          <input type="radio" id="dm" name="courseType" value="digital-marketing" />
           <label for="dm">Digital Marketing</label>
         </div>
           
