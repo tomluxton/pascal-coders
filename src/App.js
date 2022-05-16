@@ -35,7 +35,7 @@ function App() {
         <Route path = "/teaching-portal" element = {<TeachingPortal />}/>
         <Route path = "/teaching-portal/create-course" element = {<CreateCourse />} />
         <Route path='/:categoryName' element={<Category />} />
-        <Route path= '/:categoryName/:listingId' element = {<Course />}/>
+        <Route path= '/:categoryName/:courseId' element = {<Course />}/>
       </Routes>
     </Router>
     <ToastContainer />

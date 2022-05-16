@@ -16,22 +16,27 @@ function Course() {
 
   useEffect(() => {
     const fetchCourse = async () => {
-      const docRef = doc(db, 'courses', params.listingId)
+      const docRef = doc(db, 'courses', params.courseId)
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        console.log(docSnap.data())
         setCourse(docSnap.data())
         setLoading(false)
       }
     }
     fetchCourse()
-  }, [navigate, params.listingId])
+  }, [navigate, params.courseId])
+
+  if (loading) {
+    return <h3></h3>
+  }
 
 
   return (
     <div>
       <h1>{course.name}</h1>
+      <p>Price: ${course.price}</p>
+      
     </div>
   )
 }
